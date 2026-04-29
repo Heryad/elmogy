@@ -6,6 +6,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  allowedDevOrigins: ['wholesale.elmougi.ae'],
 }
 
 export default nextConfig

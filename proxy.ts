@@ -7,7 +7,7 @@ const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'elmougi-w
 // Define which routes require authentication
 const protectedRoutes = ['/profile', '/invoice']
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Check if the current path starts with any of our protected routes
@@ -55,5 +55,5 @@ export async function middleware(request: NextRequest) {
 
 // Only run middleware on pages, skip static files and API routes
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$|.*\\.jpg$).*)'],
+  matcher: ['/((?!api|_next|favicon.ico|.*\\.png$|.*\\.jpg$).*)'],
 }
