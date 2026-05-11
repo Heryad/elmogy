@@ -11,15 +11,10 @@ const brands = [
 ]
 
 const grades = [
-  { id: "HB+", label: "HB+" },
-  { id: "CPO", label: "CPO" },
-  { id: "A", labelKey: "product.gradePrefix", labelSuffix: "A" },
-  { id: "B", labelKey: "product.gradePrefix", labelSuffix: "B" },
-  { id: "C", labelKey: "product.gradePrefix", labelSuffix: "C" },
-  { id: "DNA", label: "DNA" },
-  { id: "DNB", label: "DNB" },
-  { id: "DNC", label: "DNC" },
-  { id: "TMC", label: "TMC" },
+  { id: "all", label: "All" },
+  { id: "B",   label: "Grade B" },
+  { id: "A",   label: "Grade A" },
+  { id: "A+",  label: "Grade A+" },
 ]
 
 function ChipRow({
@@ -91,7 +86,19 @@ export function CategoryChips() {
         />
       </div>
 
-
+      {/* Grade row */}
+      <div className="flex items-center gap-4">
+        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground shrink-0 w-12">
+          Grade
+        </span>
+        <ChipRow
+          items={grades}
+          activeId={selectedGrade ?? "all"}
+          onSelect={(id) => setSelectedGrade(id === "all" ? null : id)}
+          layoutId="activeGradeChip"
+          language={language}
+        />
+      </div>
     </div>
   )
 }

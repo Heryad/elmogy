@@ -59,6 +59,27 @@ export function ProductCard({ id, name, image, price, simType, grade, minQty, in
         whileHover={{ y: -4 }}
         className="group relative bg-card rounded-xl border border-border overflow-hidden transition-shadow hover:shadow-lg hover:shadow-black/5"
       >
+        {/* Grade Badge - Top Left */}
+        <div className="absolute top-3 left-3 z-10">
+          <span className={`px-2 py-1 rounded text-[10px] font-bold backdrop-blur-md shadow-sm ${
+            grade === 'HB+' || grade === 'CPO'
+              ? 'bg-amber-400/20 text-amber-600 border border-amber-400/30'
+              : grade === 'DNA' || grade === 'DNB' || grade === 'DNC'
+              ? 'bg-blue-500/20 text-blue-600 border border-blue-500/30'
+              : grade === 'A+'
+              ? 'bg-emerald-500/20 text-emerald-600 border border-emerald-500/30'
+              : grade === 'A'
+              ? 'bg-green-500/15 text-green-600 border border-green-500/25'
+              : grade === 'B+' || grade === 'B'
+              ? 'bg-slate-500/15 text-slate-500 border border-slate-400/30'
+              : grade === 'C'
+              ? 'bg-rose-500/15 text-rose-500 border border-rose-400/30'
+              : 'bg-purple-500/15 text-purple-500 border border-purple-400/30'
+          }`}>
+            {grade}
+          </span>
+        </div>
+
         {/* SIM Badge - Top Right */}
         <div className="absolute top-3 right-3 z-10">
           <span className={`px-2 py-1 rounded text-[10px] font-medium backdrop-blur-md shadow-sm ${
