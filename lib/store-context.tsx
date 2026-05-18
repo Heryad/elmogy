@@ -144,7 +144,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           const data = await res.json()
           if (data.user) {
             const formattedOrders = (data.user.orders || []).map((o: any) => ({
-              id: o.id.split('-')[0], // show short id
+              id: o.id,
               date: new Date(o.created_at).toLocaleDateString(),
               total: o.total_amount,
               status: o.status,

@@ -97,8 +97,8 @@ export default function CheckoutPage() {
               </div>
             ) : (
               <div className="text-muted-foreground">
-                Please login to place an order.
-                <Button variant="link" className="px-2" onClick={() => router.push('/login?callbackUrl=/checkout')}>Login</Button>
+                {t('checkout.loginPrompt', language)}
+                <Button variant="link" className="px-2" onClick={() => router.push('/login?callbackUrl=/checkout')}>{t('checkout.loginBtn', language)}</Button>
               </div>
             )}
           </div>
@@ -115,7 +115,7 @@ export default function CheckoutPage() {
                   <div className="flex-1">
                     <h4 className="font-medium text-sm line-clamp-1">{item.name}</h4>
                     <div className="text-xs text-muted-foreground mt-1">
-                      {item.grade} • {item.simType.toUpperCase()}
+                      {item.grade} • {t('product.' + (item.simType === 'normal' ? 'normalSim' : item.simType === 'dual' ? 'dualSim' : 'esim'), language)}
                     </div>
                     <div className="flex justify-between items-center mt-2">
                       <span className="text-sm">{item.quantity} x {item.price.toLocaleString()}</span>

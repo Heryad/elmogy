@@ -6,7 +6,7 @@ const phoneNumber = "971555525061"
 const waMessage = "Hello! I'm interested in your wholesale mobile devices."
 const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(waMessage)}`
 const instagramUrl = "https://www.instagram.com/ahmed.elmogy50"
-const tiktokUrl = "https://www.tiktok.com/@elmogy.shj"
+const tiktokUrl = "https://www.tiktok.com/@ahmed.elmogy.iphone"
 
 const bubbles = [
   {

@@ -40,7 +40,7 @@ export function CartSidebar() {
                   </div>
 
                   <div className="text-xs text-muted-foreground mt-1">
-                    {item.grade} • {item.simType.toUpperCase()}
+                    {item.grade} • {t('product.' + (item.simType === 'normal' ? 'normalSim' : item.simType === 'dual' ? 'dualSim' : 'esim'), language)}
                   </div>
 
                   <div className="mt-auto flex items-center justify-between">

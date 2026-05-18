@@ -77,9 +77,9 @@ export function ProfileSection() {
           <div className="w-16 h-16 rounded-full bg-amber-500/10 flex items-center justify-center mx-auto mb-4 border border-amber-500/20">
             <ShieldAlert className="h-8 w-8 text-amber-500" />
           </div>
-          <h2 className="text-xl font-bold text-foreground mb-2">Account Under Review</h2>
+          <h2 className="text-xl font-bold text-foreground mb-2">{t('profile.review.title', language)}</h2>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            Your wholesale account application is currently being reviewed by our team. We will verify your trade license and passport details. You will be able to place orders once approved.
+            {t('profile.review.desc', language)}
           </p>
         </motion.div>
       ) : (
@@ -209,7 +209,7 @@ export function ProfileSection() {
                       <div className="flex items-start justify-between mb-4">
                         <div>
                           <div className="flex items-center gap-2">
-                            <p className="font-bold text-foreground text-sm">{order.id}</p>
+                            <p className="font-bold text-foreground text-sm">{order.id.split('-')[0]}</p>
                             <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                           </div>
                           <p className="text-[10px] font-bold text-muted-foreground mt-0.5">{order.date}</p>

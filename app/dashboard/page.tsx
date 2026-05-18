@@ -23,6 +23,8 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { supabase } from "@/lib/supabase"
+import { useStore } from "@/lib/store-context"
+import { t } from "@/lib/translations"
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -37,6 +39,7 @@ export default function DashboardPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState("")
   const [authError, setAuthError] = useState(false)
+  const { language } = useStore()
   
   const [users, setUsers] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -232,23 +235,23 @@ export default function DashboardPage() {
           <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
             <ShieldCheck className="h-8 w-8 text-primary" />
           </div>
-          <h1 className="text-2xl font-bold text-center text-foreground mb-2">Admin Portal</h1>
-          <p className="text-sm text-center text-muted-foreground mb-8">Enter the master password to continue</p>
+          <h1 className="text-2xl font-bold text-center text-foreground mb-2">{t('admin.portal', language)}</h1>
+          <p className="text-sm text-center text-muted-foreground mb-8">{t('admin.enterPassword', language)}</p>
           
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input 
                 type="password"
-                placeholder="Password"
+                placeholder={t('admin.password', language)}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={`pl-10 h-12 bg-secondary/30 border-border/50 ${authError ? 'border-destructive focus-visible:ring-destructive' : ''}`}
               />
             </div>
-            {authError && <p className="text-xs text-destructive text-center font-bold">Incorrect password</p>}
+            {authError && <p className="text-xs text-destructive text-center font-bold">{t('admin.incorrectPassword', language)}</p>}
             <Button type="submit" className="w-full h-12 font-bold text-base shadow-lg shadow-primary/20">
-              Access Dashboard
+              {t('admin.accessDashboard', language)}
             </Button>
           </form>
         </motion.div>
@@ -270,7 +273,7 @@ export default function DashboardPage() {
           
           <Button variant="ghost" size="sm" onClick={handleLogout} className="text-muted-foreground hover:text-foreground">
             <LogOut className="h-4 w-4 mr-2" />
-            Exit Portal
+            {t('admin.exitPortal', language)}
           </Button>
         </div>
       </header>
@@ -283,14 +286,14 @@ export default function DashboardPage() {
             className={`flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'users' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
           >
             <Users className="h-4 w-4" />
-            Users
+            {t('admin.usersTab', language)}
           </button>
           <button 
             onClick={() => setActiveTab('orders')}
             className={`flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg font-bold text-sm transition-all ${activeTab === 'orders' ? 'bg-card text-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
           >
             <ShoppingCart className="h-4 w-4" />
-            Orders
+            {t('admin.ordersTab', language)}
           </button>
         </div>
 
@@ -298,17 +301,17 @@ export default function DashboardPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h2 className="text-2xl font-bold text-foreground">
-              {activeTab === 'users' ? 'User Management' : 'Order Management'}
+              {activeTab === 'users' ? t('admin.userManagement', language) : t('admin.orderManagement', language)}
             </h2>
             <p className="text-sm text-muted-foreground mt-1">
-              {activeTab === 'users' ? 'Review registrations, set credit limits, and update purchases.' : 'Track, update, and manage incoming orders.'}
+              {activeTab === 'users' ? t('admin.userManagementDesc', language) : t('admin.orderManagementDesc', language)}
             </p>
           </div>
           
           <div className="relative w-full sm:w-72">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input 
-              placeholder={activeTab === 'users' ? "Search by name, phone..." : "Search orders by ID, name..."}
+              placeholder={activeTab === 'users' ? t('admin.searchUsers', language) : t('admin.searchOrders', language)}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 h-10 bg-card border-border/50 w-full rounded-full"
@@ -323,20 +326,20 @@ export default function DashboardPage() {
               <thead className="bg-secondary/30 text-muted-foreground text-xs uppercase font-bold tracking-wider">
                 {activeTab === 'users' ? (
                   <tr>
-                    <th className="px-6 py-4">Applicant</th>
-                    <th className="px-6 py-4">Contact</th>
-                    <th className="px-6 py-4">Financials</th>
-                    <th className="px-6 py-4">Documents</th>
-                    <th className="px-6 py-4">Status</th>
-                    <th className="px-6 py-4 text-right">Actions</th>
+                    <th className="px-6 py-4">{t('admin.th.applicant', language)}</th>
+                    <th className="px-6 py-4">{t('admin.th.contact', language)}</th>
+                    <th className="px-6 py-4">{t('admin.th.financials', language)}</th>
+                    <th className="px-6 py-4">{t('admin.th.documents', language)}</th>
+                    <th className="px-6 py-4">{t('admin.th.status', language)}</th>
+                    <th className="px-6 py-4 text-right">{t('admin.th.actions', language)}</th>
                   </tr>
                 ) : (
                   <tr>
-                    <th className="px-6 py-4">Order ID & Date</th>
-                    <th className="px-6 py-4">Customer</th>
-                    <th className="px-6 py-4">Total</th>
-                    <th className="px-6 py-4">Status</th>
-                    <th className="px-6 py-4 text-right">Actions</th>
+                    <th className="px-6 py-4">{t('admin.th.orderIdDate', language)}</th>
+                    <th className="px-6 py-4">{t('admin.th.customer', language)}</th>
+                    <th className="px-6 py-4">{t('admin.th.total', language)}</th>
+                    <th className="px-6 py-4">{t('admin.th.status', language)}</th>
+                    <th className="px-6 py-4 text-right">{t('admin.th.actions', language)}</th>
                   </tr>
                 )}
               </thead>
@@ -345,19 +348,19 @@ export default function DashboardPage() {
                   <tr>
                     <td colSpan={6} className="px-6 py-12 text-center">
                       <Loader2 className="h-8 w-8 text-primary animate-spin mx-auto mb-4" />
-                      <p className="text-muted-foreground font-medium">Loading {activeTab}...</p>
+                      <p className="text-muted-foreground font-medium">{t('admin.loading', language)}</p>
                     </td>
                   </tr>
                 ) : activeTab === 'users' && filteredUsers.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground font-medium">
-                      No users found.
+                      {t('admin.noUsers', language)}
                     </td>
                   </tr>
                 ) : activeTab === 'orders' && filteredOrders.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="px-6 py-12 text-center text-muted-foreground font-medium">
-                      No orders found.
+                      {t('admin.noOrders', language)}
                     </td>
                   </tr>
                 ) : activeTab === 'users' ? (
@@ -377,8 +380,8 @@ export default function DashboardPage() {
                         <div className="text-xs text-muted-foreground mt-0.5">{user.country}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="font-medium text-xs">Limit: {(user.credit_limit || 0).toLocaleString()} AED</div>
-                        <div className="text-[10px] text-muted-foreground mt-0.5 font-bold uppercase">Spent: {(user.total_spent || 0).toLocaleString()} AED</div>
+                        <div className="font-medium text-xs">{t('admin.limit', language)}: {(user.credit_limit || 0).toLocaleString()} USD</div>
+                        <div className="text-[10px] text-muted-foreground mt-0.5 font-bold uppercase">{t('admin.spent', language)}: {(user.total_spent || 0).toLocaleString()} USD</div>
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex gap-2">
@@ -403,7 +406,7 @@ export default function DashboardPage() {
                         {updatingId === user.id ? (
                           <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
                             <Loader2 className="h-3 w-3 animate-spin" />
-                            Updating...
+                            {t('admin.updating', language)}
                           </div>
                         ) : (
                           getStatusBadge(user.status)
@@ -417,7 +420,7 @@ export default function DashboardPage() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="w-48">
-                            <DropdownMenuLabel>Manage User</DropdownMenuLabel>
+                            <DropdownMenuLabel>{t('admin.manageUser', language)}</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem 
                               onClick={() => {
@@ -427,17 +430,17 @@ export default function DashboardPage() {
                               }} 
                               className="text-primary font-medium cursor-pointer"
                             >
-                              <CreditCard className="h-4 w-4 mr-2" /> Edit Financials
+                              <CreditCard className="h-4 w-4 mr-2" /> {t('admin.editFinancials', language)}
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => updateStatus(user.id, 'active')} className="text-success font-medium cursor-pointer">
-                              <CheckCircle2 className="h-4 w-4 mr-2" /> Mark as Active
+                              <CheckCircle2 className="h-4 w-4 mr-2" /> {t('admin.markActive', language)}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => updateStatus(user.id, 'pending')} className="text-amber-600 font-medium cursor-pointer">
-                              <Clock className="h-4 w-4 mr-2" /> Mark as Pending
+                              <Clock className="h-4 w-4 mr-2" /> {t('admin.markPending', language)}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => updateStatus(user.id, 'rejected')} className="text-destructive font-medium cursor-pointer">
-                              <XCircle className="h-4 w-4 mr-2" /> Reject Application
+                              <XCircle className="h-4 w-4 mr-2" /> {t('admin.rejectApplication', language)}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -461,13 +464,13 @@ export default function DashboardPage() {
                         <div className="text-xs text-muted-foreground mt-0.5">{order.users?.phone_number || 'N/A'}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="font-black text-foreground">{order.total_amount?.toLocaleString()} AED</div>
+                        <div className="font-black text-foreground">{order.total_amount?.toLocaleString()} USD</div>
                       </td>
                       <td className="px-6 py-4">
                         {updatingId === order.id ? (
                           <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
                             <Loader2 className="h-3 w-3 animate-spin" />
-                            Updating...
+                            {t('admin.updating', language)}
                           </div>
                         ) : (
                           getStatusBadge(order.status)
@@ -481,20 +484,24 @@ export default function DashboardPage() {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end" className="w-48">
-                            <DropdownMenuLabel>Manage Order</DropdownMenuLabel>
+                            <DropdownMenuLabel>{t('admin.manageOrder', language)}</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={() => window.open(`/invoice/${order.id}`, '_blank')} className="font-medium cursor-pointer">
+                              <ExternalLink className="h-4 w-4 mr-2" /> {t('admin.viewInvoice', language)}
+                            </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => updateOrderStatus(order.id, 'processing')} className="text-blue-600 font-medium cursor-pointer">
-                              <Package className="h-4 w-4 mr-2" /> Mark Processing
+                              <Package className="h-4 w-4 mr-2" /> {t('admin.markProcessing', language)}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => updateOrderStatus(order.id, 'shipped')} className="text-primary font-medium cursor-pointer">
-                              <Truck className="h-4 w-4 mr-2" /> Mark Shipped
+                              <Truck className="h-4 w-4 mr-2" /> {t('admin.markShipped', language)}
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => updateOrderStatus(order.id, 'delivered')} className="text-success font-medium cursor-pointer">
-                              <CheckCircle2 className="h-4 w-4 mr-2" /> Mark Delivered
+                              <CheckCircle2 className="h-4 w-4 mr-2" /> {t('admin.markDelivered', language)}
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem onClick={() => updateOrderStatus(order.id, 'cancelled')} className="text-destructive font-medium cursor-pointer">
-                              <XCircle className="h-4 w-4 mr-2" /> Cancel Order
+                              <XCircle className="h-4 w-4 mr-2" /> {t('admin.cancelOrder', language)}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -518,15 +525,15 @@ export default function DashboardPage() {
                 className="w-full max-w-sm bg-card rounded-2xl shadow-2xl border border-border/50 overflow-hidden"
               >
                 <div className="p-6 border-b border-border/50 bg-secondary/10">
-                  <h3 className="text-lg font-bold text-foreground">Update Financials</h3>
-                  <p className="text-sm text-muted-foreground mt-1">For {editingFinancials.full_name}</p>
+                  <h3 className="text-lg font-bold text-foreground">{t('admin.updateFinancials', language)}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">{t('admin.for', language)} {editingFinancials.full_name}</p>
                 </div>
                 
                 <div className="p-6 space-y-5">
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-foreground/80">Credit Limit (AED)</label>
+                    <label className="text-sm font-semibold text-foreground/80">{t('admin.creditLimitUSD', language)}</label>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-bold">AED</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-bold">USD</span>
                       <Input 
                         type="number"
                         value={newLimit}
@@ -536,9 +543,9 @@ export default function DashboardPage() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-foreground/80">Total Purchases (AED)</label>
+                    <label className="text-sm font-semibold text-foreground/80">{t('admin.totalPurchasesUSD', language)}</label>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-bold">AED</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-bold">USD</span>
                       <Input 
                         type="number"
                         value={newSpent}
@@ -551,7 +558,7 @@ export default function DashboardPage() {
                 
                 <div className="p-4 bg-secondary/30 flex justify-end gap-3 border-t border-border/50">
                   <Button variant="ghost" onClick={() => setEditingFinancials(null)} className="rounded-xl font-bold">
-                    Cancel
+                    {t('admin.cancel', language)}
                   </Button>
                   <Button 
                     onClick={() => updateFinancials(editingFinancials.id)}
@@ -559,7 +566,7 @@ export default function DashboardPage() {
                     disabled={updatingId === editingFinancials.id}
                   >
                     {updatingId === editingFinancials.id ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <CreditCard className="h-4 w-4 mr-2" />}
-                    Save Changes
+                    {t('admin.saveChanges', language)}
                   </Button>
                 </div>
               </motion.div>

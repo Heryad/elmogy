@@ -64,7 +64,7 @@ function ProfileContent() {
               </Link>
               <Link href="/signup">
                 <Button variant="outline" className="font-bold rounded-xl border-border/50">
-                  Sign Up
+                  {t('nav.signUp', language)}
                 </Button>
               </Link>
             </div>

@@ -30,6 +30,7 @@ const I = {
   i15pm: "https://elmougi.ae/cdn/shop/files/Natural_Titanium_f87efc3a-f0d6-4f56-9b2c-8e81003fd82d.png?v=1777010578&width=400",
   i15pmB: "https://elmougi.ae/cdn/shop/files/Natural_Titanium_f87efc3a-f0d6-4f56-9b2c-8e81003fd82d.png?v=1777010578&width=400",
   i16: "https://elmougi.ae/cdn/shop/files/Desert_Titanium.png?v=1777012758&width=400",
+  i16m: "https://elmougi.ae/cdn/shop/files/Ultramarine.png?v=1777012778&width=1600",
   sFlip3: "https://elmougi.ae/cdn/shop/files/Frame_180_41.png?v=1777012187&width=1600",
   sFlip4: "https://elmougi.ae/cdn/shop/files/Frame_180_61.png?v=1777012159&width=1600",
   sFlip5: "https://elmougi.ae/cdn/shop/files/Frame_180_85.png?v=1777012288&width=1600",
@@ -42,7 +43,7 @@ const I = {
 type P = { name: string; image: string; price: number; simType: SimType; category: string; grade: Grade; minQty: number }
 
 // helper: expand one model into 3 grade entries
-function g(name: string, img: string, b: number, a: number, ap: number, sim: SimType, cat = 'apple', qty = 50): P[] {
+function g(name: string, img: string, b: number, a: number, ap: number, sim: SimType, cat = 'apple', qty = 5): P[] {
   return [
     { name, image: img, price: b, simType: sim, category: cat, grade: 'B', minQty: qty },
     { name, image: img, price: a, simType: sim, category: cat, grade: 'A', minQty: qty },
@@ -85,31 +86,31 @@ const products: P[] = [
   ...g("iPhone 12 Pro Max 128 GB", I.i12pm, 280, 290, 300, 'normal'),
   ...g("iPhone 12 Pro Max 256 GB", I.i12pm, 290, 300, 310, 'normal'),
   // iPhone 13
-  ...g("iPhone 13 128 GB", I.i13, 260, 270, 280, 'normal'),
-  ...g("iPhone 13 256 GB", I.i13, 270, 280, 290, 'normal'),
+  ...g("iPhone 13 128 GB", I.i13, 250, 260, 270, 'normal'),
+  ...g("iPhone 13 256 GB", I.i13, 260, 270, 280, 'normal'),
   // iPhone 13 Pro
   ...g("iPhone 13 Pro 128 GB", I.i13p, 320, 330, 340, 'normal'),
   ...g("iPhone 13 Pro 256 GB", I.i13p, 350, 360, 370, 'normal'),
   ...g("iPhone 13 Pro 512 GB", I.i13p, 360, 370, 380, 'normal'),
   ...g("iPhone 13 Pro 1 TB", I.i13p, 370, 380, 390, 'normal'),
   // iPhone 13 Pro Max
-  ...g("iPhone 13 Pro Max 128 GB", I.i13pm, 365, 380, 395, 'normal'),
-  ...g("iPhone 13 Pro Max 256 GB", I.i13pm, 430, 445, 460, 'normal'),
-  ...g("iPhone 13 Pro Max 512 GB", I.i13pm, 440, 455, 470, 'normal'),
-  ...g("iPhone 13 Pro Max 1 TB", I.i13pm, 450, 465, 480, 'normal'),
+  ...g("iPhone 13 Pro Max 128 GB", I.i13pm, 370, 390, 405, 'normal'),
+  ...g("iPhone 13 Pro Max 256 GB", I.i13pm, 435, 450, 465, 'normal'),
+  ...g("iPhone 13 Pro Max 512 GB", I.i13pm, 445, 460, 475, 'normal'),
+  ...g("iPhone 13 Pro Max 1 TB", I.i13pm, 455, 470, 485, 'normal'),
   // iPhone 14
-  ...g("iPhone 14 128 GB", I.i14, 310, 320, 330, 'normal'),
-  ...g("iPhone 14 256 GB", I.i14, 320, 330, 340, 'normal'),
+  ...g("iPhone 14 128 GB", I.i14, 290, 310, 325, 'normal'),
+  ...g("iPhone 14 256 GB", I.i14, 300, 320, 330, 'normal'),
   // iPhone 14 Pro — E SIM
-  ...g("iPhone 14 Pro 128 GB E SIM", I.i14p, 360, 375, 390, 'esim'),
-  ...g("iPhone 14 Pro 256 GB E SIM", I.i14p, 385, 400, 415, 'esim'),
-  ...g("iPhone 14 Pro 512 GB E SIM", I.i14p, 395, 410, 425, 'esim'),
-  ...g("iPhone 14 Pro 1 TB E SIM", I.i14p, 405, 420, 435, 'esim'),
+  ...g("iPhone 14 Pro 128 GB E SIM", I.i14p, 370, 390, 410, 'esim'),
+  ...g("iPhone 14 Pro 256 GB E SIM", I.i14p, 405, 430, 445, 'esim'),
+  ...g("iPhone 14 Pro 512 GB E SIM", I.i14p, 415, 440, 455, 'esim'),
+  ...g("iPhone 14 Pro 1 TB E SIM", I.i14p, 425, 450, 465, 'esim'),
   // iPhone 14 Pro Max — E SIM
-  ...g("iPhone 14 Pro Max 128 GB E SIM", I.i14p, 415, 430, 445, 'esim'),
-  ...g("iPhone 14 Pro Max 256 GB E SIM", I.i14p, 450, 465, 480, 'esim'),
-  ...g("iPhone 14 Pro Max 512 GB E SIM", I.i14p, 465, 480, 495, 'esim'),
-  ...g("iPhone 14 Pro Max 1 TB E SIM", I.i14p, 480, 495, 510, 'esim'),
+  ...g("iPhone 14 Pro Max 128 GB E SIM", I.i14p, 430, 450, 465, 'esim'),
+  ...g("iPhone 14 Pro Max 256 GB E SIM", I.i14p, 475, 485, 500, 'esim'),
+  ...g("iPhone 14 Pro Max 512 GB E SIM", I.i14p, 485, 495, 510, 'esim'),
+  ...g("iPhone 14 Pro Max 1 TB E SIM", I.i14p, 495, 505, 520, 'esim'),
   // iPhone 14 Pro — Normal SIM
   ...g("iPhone 14 Pro 128 GB", I.i14p, 390, 405, 420, 'normal'),
   ...g("iPhone 14 Pro 256 GB", I.i14p, 420, 440, 460, 'normal'),
@@ -127,25 +128,25 @@ const products: P[] = [
   ...g("iPhone 15 Pro 512 GB", I.i15p, 575, 595, 615, 'normal'),
   ...g("iPhone 15 Pro 1 TB", I.i15p, 585, 605, 625, 'normal'),
   // iPhone 15 Pro Max — E SIM (first listing)
-  ...g("iPhone 15 Pro Max 256 GB E SIM", I.i15pm, 570, 590, 610, 'esim'),
-  ...g("iPhone 15 Pro Max 512 GB E SIM", I.i15pm, 590, 610, 630, 'esim'),
-  ...g("iPhone 15 Pro Max 1 TB E SIM", I.i15pmB, 605, 625, 645, 'esim'),
+  ...g("iPhone 15 Pro Max 256 GB E SIM", I.i15pm, 565, 590, 610, 'esim'),
+  ...g("iPhone 15 Pro Max 512 GB E SIM", I.i15pm, 585, 610, 630, 'esim'),
+  ...g("iPhone 15 Pro Max 1 TB E SIM", I.i15pmB, 600, 625, 645, 'esim'),
   // iPhone 15 Pro Max — Normal SIM
   ...g("iPhone 15 Pro Max 256 GB", I.i15pm, 630, 650, 670, 'normal'),
   ...g("iPhone 15 Pro Max 512 GB", I.i15pm, 645, 665, 685, 'normal'),
   ...g("iPhone 15 Pro Max 1 TB", I.i15pmB, 660, 685, 700, 'normal'),
   // iPhone 16
-  ...g("iPhone 16 128 GB", I.i16, 550, 570, 590, 'normal'),
-  ...g("iPhone 16 256 GB", I.i16, 570, 590, 610, 'normal'),
+  ...g("iPhone 16 128 GB", I.i16m, 550, 570, 590, 'normal'),
+  ...g("iPhone 16 256 GB", I.i16m, 570, 590, 610, 'normal'),
   // iPhone 16 Pro
   ...g("iPhone 16 Pro 128 GB", I.i16, 650, 670, 690, 'normal'),
   ...g("iPhone 16 Pro 256 GB", I.i16, 670, 690, 710, 'normal'),
   ...g("iPhone 16 Pro 512 GB", I.i16, 685, 705, 720, 'normal'),
   ...g("iPhone 16 Pro 1 TB", I.i16, 710, 725, 740, 'normal'),
   // iPhone 16 Pro Max — E SIM (first listing)
-  ...g("iPhone 16 Pro Max 256 GB E SIM", I.i16, 770, 790, 810, 'esim'),
-  ...g("iPhone 16 Pro Max 512 GB E SIM", I.i16, 790, 810, 830, 'esim'),
-  ...g("iPhone 16 Pro Max 1 TB E SIM", I.i16, 805, 825, 845, 'esim'),
+  ...g("iPhone 16 Pro Max 256 GB E SIM", I.i16, 770, 795, 815, 'esim'),
+  ...g("iPhone 16 Pro Max 512 GB E SIM", I.i16, 785, 810, 830, 'esim'),
+  ...g("iPhone 16 Pro Max 1 TB E SIM", I.i16, 800, 825, 840, 'esim'),
   // iPhone 16 Pro Max — Normal SIM
   ...g("iPhone 16 Pro Max 256 GB", I.i16, 830, 850, 870, 'normal'),
   ...g("iPhone 16 Pro Max 512 GB", I.i16, 850, 870, 890, 'normal'),

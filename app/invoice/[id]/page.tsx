@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button"
 import { useStore, Order } from "@/lib/store-context"
 import { Navbar } from "@/components/navbar"
 import { t } from "@/lib/translations"
+import { supabase } from "@/lib/supabase"
 
 const container = {
   hidden: { opacity: 0 },
@@ -36,9 +37,10 @@ function InvoiceContent() {
   const params = useParams()
   const router = useRouter()
   const { user, isLoading, language } = useStore()
-  const [order, setOrder] = useState<Order | null>(null)
+  const [order, setOrder] = useState<any>(null)
+  const [dbLoading, setDbLoading] = useState(true)
 
-  const statusConfig = {
+  const statusConfig: any = {
     pending: {
       icon: Clock,
       color: 'text-amber-600 bg-amber-50 border-amber-200',
@@ -62,22 +64,47 @@ function InvoiceContent() {
   }
 
   useEffect(() => {
-    if (!isLoading && user) {
-      const foundOrder = user.orders.find(o => o.id === params.id)
-      if (foundOrder) {
-        setOrder(foundOrder)
+    const fetchOrder = async () => {
+      setDbLoading(true)
+      try {
+        const { data, error } = await supabase
+          .from('orders')
+          .select(`
+            *,
+            users(full_name, phone_number),
+            order_items(*)
+          `)
+          .eq('id', params.id)
+          .single()
+
+        if (data && !error) {
+          setOrder({
+            id: data.id,
+            date: data.created_at,
+            total: data.total_amount,
+            status: data.status,
+            customerName: data.users?.full_name,
+            customerPhone: data.users?.phone_number,
+            items: data.order_items.map((item: any) => ({
+              name: item.product_name,
+              price: item.price,
+              quantity: item.quantity
+            }))
+          })
+        }
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setDbLoading(false)
       }
     }
-  }, [user, params.id, isLoading])
 
-  // Fix: Move the redirect to useEffect to avoid "update while rendering" error
-  useEffect(() => {
-    if (!isLoading && !user) {
-      router.push('/signup')
+    if (params.id) {
+      fetchOrder()
     }
-  }, [isLoading, user, router])
+  }, [params.id])
 
-  if (isLoading || !user) {
+  if (dbLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -91,7 +118,7 @@ function InvoiceContent() {
         <FileText className="h-12 w-12 text-muted-foreground mb-4" />
         <h1 className="text-xl font-semibold mb-2">Invoice Not Found</h1>
         <p className="text-muted-foreground text-sm mb-6">The invoice you're looking for doesn't exist.</p>
-        <Button onClick={() => router.push('/profile')} variant="outline">
+        <Button onClick={() => router.back()} variant="outline">
           {t('invoice.backToProfile', language)}
         </Button>
       </div>
@@ -116,7 +143,7 @@ function InvoiceContent() {
           className="flex items-center justify-between mb-6"
         >
           <button
-            onClick={() => router.push('/profile')}
+            onClick={() => router.back()}
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors group"
           >
             <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
@@ -181,7 +208,7 @@ function InvoiceContent() {
                   <User className="h-3.5 w-3.5" />
                   <span className="text-[10px] font-black uppercase tracking-widest">{t('invoice.customerName', language)}</span>
                 </div>
-                <p className="font-bold text-sm text-foreground">{user.fullName}</p>
+                <p className="font-bold text-sm text-foreground">{order.customerName || 'N/A'}</p>
               </div>
             </motion.div>
 
@@ -191,7 +218,7 @@ function InvoiceContent() {
                   <Phone className="h-3.5 w-3.5" />
                   <span className="text-[10px] font-black uppercase tracking-widest">{t('invoice.customerPhone', language)}</span>
                 </div>
-                <p className="font-bold text-sm text-foreground">{user.phone}</p>
+                <p className="font-bold text-sm text-foreground">{order.customerPhone || 'N/A'}</p>
               </div>
 
               <div className="space-y-2">
@@ -220,7 +247,7 @@ function InvoiceContent() {
                 </div>
 
                 {/* Table Body */}
-                {order.items.map((orderItem, index) => (
+                {order.items.map((orderItem: any, index: number) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: -10 }}

@@ -288,7 +288,7 @@ export function SignupForm() {
 
   const canProceed = () => {
     if (currentStep === 1) return formData.fullName.length > 2 && formData.phoneNumber.length > 6
-    if (currentStep === 2) return license && passport
+    if (currentStep === 2) return true // Allow skipping
     return true
   }
 
@@ -532,15 +532,27 @@ export function SignupForm() {
                       </div>
                       <div className="flex justify-between items-center py-3 border-b border-border/50">
                         <span className="text-sm text-muted-foreground font-medium">{t('signup.step2.tradeLicense', language)}</span>
-                        <span className="text-xs font-bold text-success flex items-center gap-1.5 bg-success/10 px-2.5 py-1 rounded-full">
-                          <Check className="h-3 w-3" /> {t('signup.step2.uploadComplete', language)}
-                        </span>
+                        {license ? (
+                          <span className="text-xs font-bold text-success flex items-center gap-1.5 bg-success/10 px-2.5 py-1 rounded-full">
+                            <Check className="h-3 w-3" /> {t('signup.step2.uploadComplete', language)}
+                          </span>
+                        ) : (
+                          <span className="text-xs font-bold text-amber-500 flex items-center gap-1.5 bg-amber-500/10 px-2.5 py-1 rounded-full">
+                            {t('signup.step2.skipped', language)}
+                          </span>
+                        )}
                       </div>
                       <div className="flex justify-between items-center py-3">
                         <span className="text-sm text-muted-foreground font-medium">{t('signup.step2.idDocument', language)}</span>
-                        <span className="text-xs font-bold text-success flex items-center gap-1.5 bg-success/10 px-2.5 py-1 rounded-full">
-                          <Check className="h-3 w-3" /> {t('signup.step2.uploadComplete', language)}
-                        </span>
+                        {passport ? (
+                          <span className="text-xs font-bold text-success flex items-center gap-1.5 bg-success/10 px-2.5 py-1 rounded-full">
+                            <Check className="h-3 w-3" /> {t('signup.step2.uploadComplete', language)}
+                          </span>
+                        ) : (
+                          <span className="text-xs font-bold text-amber-500 flex items-center gap-1.5 bg-amber-500/10 px-2.5 py-1 rounded-full">
+                            {t('signup.step2.skipped', language)}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </motion.div>
@@ -570,7 +582,7 @@ export function SignupForm() {
                 disabled={!canProceed()}
                 className="flex-1 h-12 gap-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-xl font-bold shadow-lg shadow-primary/20"
               >
-                {t('signup.step1.continue', language)}
+                {currentStep === 2 && (!license || !passport) ? t('signup.step2.skip', language) : t('signup.step1.continue', language)}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             ) : (
